@@ -5,10 +5,12 @@ import org.openqa.selenium.WebElement;
 
 public class Button {
     WebDriver driver;
-    public Button(WebDriver driver){
+
+    public Button(WebDriver driver) {
         this.driver = driver;
     }
-    public void clickButton(WebElement webElement){
+
+    public void clickButton(WebElement webElement) {
         webElement.click();
     }
 }

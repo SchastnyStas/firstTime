@@ -4,11 +4,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-
 public class LoginPage extends BasePage {
     @FindBy(id = "username")
     public WebElement usernameInput;
-
 
     @FindBy(id = "password")
     public WebElement passwordInput;

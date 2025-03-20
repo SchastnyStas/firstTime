@@ -11,8 +11,10 @@ public class AccountListPage extends BasePage {
     public static final String TABLE_XPATH = "//table";
     public static final String ACCOUNT_NAME_FIELD_XPATH = TABLE_XPATH + "//a[contains" +
             "(@title, '%s')]";
-    public static final String PHONE_BY_ACCOUNT_NAME_XPATH = ACCOUNT_NAME_FIELD_XPATH + "/ancestor::tbody//span[contains(@class, 'forceOutputPhone')]";
-    public static final String ACCOUNT_OWNER_BY_ACCOUNT_XPATH = ACCOUNT_NAME_FIELD_XPATH + "/ancestor::tbody" +
+    public static final String PHONE_BY_ACCOUNT_NAME_XPATH = ACCOUNT_NAME_FIELD_XPATH +
+            "/ancestor::tr//span[contains(@class, 'forceOutputPhone')]";
+    public static final String ACCOUNT_OWNER_BY_ACCOUNT_XPATH = ACCOUNT_NAME_FIELD_XPATH +
+            "/ancestor::tr" +
             "//span[contains(@class, 'uiOutputText')]";
 
     public AccountListPage(WebDriver driver) {
@@ -21,10 +23,11 @@ public class AccountListPage extends BasePage {
 
     public AccountListPage openPage(String url) {
         driver.get(url);
+        waitForPageToLoad();
         return this;
     }
 
-    public AccountListPage waitForPageToLoad(){
+    public AccountListPage waitForPageToLoad() {
         new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(TABLE_XPATH)));
         return this;
     }
@@ -37,10 +40,7 @@ public class AccountListPage extends BasePage {
         return driver.findElement(By.xpath(String.format(PHONE_BY_ACCOUNT_NAME_XPATH, accountName))).getText();
     }
 
-    public String getExistAccountOwnerByAccountName(String accountName) {
-        return driver.findElement(By.xpath(String.format(ACCOUNT_OWNER_BY_ACCOUNT_XPATH, accountName))).getText();
-    }
-    public AccountPage clickOnAccountName(String accountName){
+    public AccountPage clickOnAccountName(String accountName) {
         driver.findElement(By.xpath(String.format(ACCOUNT_NAME_FIELD_XPATH, accountName))).click();
         return new AccountPage(driver);
     }

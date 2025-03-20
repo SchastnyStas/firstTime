@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import pages.*;
 
@@ -20,6 +21,8 @@ public class BaseTest implements ITestConstants, IConstants {
     HomePage homePage;
     LoginPage loginPage;
     NewAccountModalPage newAccountModalPage;
+    ContactListPage contactListPage;
+    NewContactModalPage newContactModalPagePage;
 
     public void initPage() {
         accountPage = new AccountPage(driver);
@@ -27,6 +30,8 @@ public class BaseTest implements ITestConstants, IConstants {
         homePage = new HomePage(driver);
         loginPage = new LoginPage(driver);
         newAccountModalPage = new NewAccountModalPage(driver);
+        contactListPage = new ContactListPage(driver);
+        newContactModalPagePage = new NewContactModalPage(driver);
     }
 
     @BeforeMethod
@@ -36,9 +41,8 @@ public class BaseTest implements ITestConstants, IConstants {
         ChromeOptions options = new ChromeOptions();
         Map<String, Object> prefs = new HashMap<>();
         options.addArguments("--disable-popup-blocking");
-     //   options.addArguments("-headless");
+        options.addArguments("-headless");
         prefs.put("profile.default_content_setting_values.notifications", 2);
-      //  prefs.put("profile.default_content_setting_values.popups", 2);
 
         options.setExperimentalOption("prefs", prefs);
 
@@ -47,6 +51,11 @@ public class BaseTest implements ITestConstants, IConstants {
         driver.manage().window().maximize();
         PageFactory.initElements(driver, this);
         initPage();
+    }
+
+    @AfterMethod
+    public void quit() {
+        driver.quit();
     }
 }
 
